@@ -1,1 +1,10 @@
-<p>weather-forecast works!</p>
+<div *ngIf="weatherData">
+    <h1>7-Day Weather Forecast</h1>
+    <div *ngFor="let date of getDates(weatherData.dailyWeatherDetails)">
+        <h3>{{ date }}</h3>
+        <p>Min Temperature: {{ weatherData.dailyWeatherDetails[date].minTemperature }}°C</p>
+        <p>Max Temperature: {{ weatherData.dailyWeatherDetails[date].maxTemperature }}°C</p>
+        <p>Generated Energy: {{ weatherData.dailyWeatherDetails[date].generatedEnergy }} kWh</p>
+        <p>Weather code: {{ weatherData.dailyWeatherDetails[date].weatherCode }}</p>
+    </div>
+</div>

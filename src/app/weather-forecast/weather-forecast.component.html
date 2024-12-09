@@ -1,4 +1,20 @@
-<div *ngIf="weatherData">
+<!-- <h2>Pogoda w Twojej lokalizacji</h2> -->
+  
+<!-- <ng-select
+  [(ngModel)]="selectedCity"
+  [items]="cities"
+  (search)="searchCities($event)"
+  bindLabel="city"
+  placeholder="Wpisz miasto"
+  [virtualScroll]="true"
+  [loading]="false"
+>
+</ng-select> -->
+<!-- 
+<button>Pokaż pogodę</button> -->
+<!-- <button type=”button” class=”btn”>Test Button</button> -->
+
+<!-- <div *ngIf="weatherData">
     <h1>7-Day Weather Forecast for {{ city }}</h1>
     <div *ngFor="let date of getDates(weatherData.dailyWeatherDetails)">
         <h3>{{ date }}</h3>
@@ -7,7 +23,49 @@
         <p>Generated Energy: {{ weatherData.dailyWeatherDetails[date].generatedEnergy }} kWh</p>
         <p>Weather code: {{ weatherData.dailyWeatherDetails[date].weatherCode }}</p>
     </div>
+</div> -->
+<!-- <h3>{{ city }}</h3> -->
+<div>
+    <div class="container text-center">
+        <div class="col-12">
+          <div class="weather-card p-3 border rounded" [attr.data-today]="'true'">
+            <h3><i class="fa-solid fa-location-arrow"></i> {{ city }}</h3>
+            <p>
+              <strong>{{ formattedDetails[0].date }} ({{ formattedDetails[0].day }})</strong><br />
+              From {{ formattedDetails[0].details.minTemperature }}°C to {{ formattedDetails[0].details.maxTemperature }}°C
+              <!-- Min Temperature: {{ formattedDetails[0].details.minTemperature }}°C<br /> -->
+              <!-- Max Temperature: {{ formattedDetails[0].details.maxTemperature }}°C<br /> -->
+              <!-- Generated Energy: {{ formattedDetails[0].details.generatedEnergy }} kWh<br /> -->
+              Weather Code: {{ formattedDetails[0].details.weatherCode }}
+            </p>
+          </div>
+        </div>
+    </div>
 </div>
+<div *ngIf="formattedDetails.length > 0" class="container text-center">
+    <div class="row">
+      <div class="col-12">
+        <div *ngFor="let item of formattedDetails; let i = index" class="weather-card d-flex p-3 border rounded mb-3">
+          <div class="weather-info flex-grow-1">
+            <strong>{{ item.date }} ({{ i === 0 ? 'Today' : item.day }})</strong>
+          </div>
+          <div class="weather-info">
+            Min Temperature: {{ item.details.minTemperature }}°C
+          </div>
+          <div class="weather-info">
+            Max Temperature: {{ item.details.maxTemperature }}°C
+          </div>
+          <div class="weather-info">
+            Generated Energy: {{ item.details.generatedEnergy }} kWh
+          </div>
+          <div class="weather-info">
+            <i [ngClass]="mapWeatherIcon(item.details.weatherCode)"></i>
+            <!-- Weather Code: {{ item.details.weatherCode }} -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 <div *ngIf="weekSummary">
     <h1>Week Summary</h1>
@@ -15,10 +73,5 @@
     <p>Average Sunshine Duration: {{ weekSummary.averageSunshineDuration }}</p>
     <p>Highest Temperature: {{ weekSummary.highestTemperature }}</p>
     <p>Lowest Temperature: {{ weekSummary.lowestTemperature }}</p>
-    <ng-container *ngIf="weekSummary.isWeekRainy; else notRainy">
-        <p>Week is rainy</p>
-    </ng-container>
-    <ng-template #notRainy>
-        <p>Week is not rainy</p>
-    </ng-template>
+    <p>{{ weekSummary.isWeekRainy ? 'Week is rainy' : 'Week is not rainy' }}</p>
 </div>

@@ -59,4 +59,15 @@ export class WeatherService {
     const url = `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lon}&key=${this.LOCATION_API_KEY}&pretty=1`;
     return this.http.get<any>(url);
   }
+
+  getLocationSuggestions(query: string): Observable<any> {
+    const url = `https://api.opencagedata.com/geocode/v1/json?q=${query}&key=${this.LOCATION_API_KEY}&no_annotations=1&limit=5&types=locality`;
+    return this.http.get<any>(url);
+  }
+
+  getLocationNameByCityName(cityName: string): Observable<any> {
+    const url = `https://api.opencagedata.com/geocode/v1/json?q=${cityName}&key=${this.LOCATION_API_KEY}`;
+    return this.http.get<any>(url);
+  }
+
 }

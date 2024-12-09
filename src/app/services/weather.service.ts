@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Weather } from '../models/weather';
 import { map, Observable } from 'rxjs';
 import { DailyWeatherDetails } from '../models/daily-weather-details';
+import { WeekSummary } from '../models/week-summary';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,6 @@ export class WeatherService {
         map((data) => {
           const weather = new Weather();
           weather.date = data.date;
-          console.log('!!!!')
 
           for (const key in data.dailyWeatherDetails) {
             if (data.dailyWeatherDetails.hasOwnProperty(key)) {
@@ -39,5 +39,18 @@ export class WeatherService {
           return weather;
         })
       )
+  }
+
+  getWeekSummary():Observable<WeekSummary> {
+    return this.http
+    .get<WeekSummary>(`${this.baiscUrl}/week-summary?latitude=${this.lat}&longitude=${this.lon}`)
+    .pipe(
+      map((data) => {
+        let weekSummary = new WeekSummary()
+        weekSummary = data
+        console.log(weekSummary)
+        return weekSummary;
+      })
+    )
   }
 }

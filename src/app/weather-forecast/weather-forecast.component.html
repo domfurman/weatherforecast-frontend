@@ -8,3 +8,17 @@
         <p>Weather code: {{ weatherData.dailyWeatherDetails[date].weatherCode }}</p>
     </div>
 </div>
+
+<div *ngIf="weekSummary">
+    <h1>Week Summary</h1>
+    <p>Average Pressure: {{ weekSummary.averagePressure }}</p>
+    <p>Average Sunshine Duration: {{ weekSummary.averageSunshineDuration }}</p>
+    <p>Highest Temperature: {{ weekSummary.highestTemperature }}</p>
+    <p>Lowest Temperature: {{ weekSummary.lowestTemperature }}</p>
+    <ng-container *ngIf="weekSummary.isWeekRainy; else notRainy">
+        <p>Week is rainy</p>
+    </ng-container>
+    <ng-template #notRainy>
+        <p>Week is not rainy</p>
+    </ng-template>
+</div>

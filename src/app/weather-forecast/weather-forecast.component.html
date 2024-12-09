@@ -31,12 +31,13 @@
           <div class="weather-card p-3 border rounded" [attr.data-today]="'true'">
             <h3><i class="fa-solid fa-location-arrow"></i> {{ city }}</h3>
             <p>
-              <strong>{{ formattedDetails[0].date }} ({{ formattedDetails[0].day }})</strong><br />
+              <!-- <strong>{{ formattedDetails[0].date }} ({{ formattedDetails[0].day }})</strong><br /> -->
+              {{ weatherData?.currentTemperature }}°C <br />
               From {{ formattedDetails[0].details.minTemperature }}°C to {{ formattedDetails[0].details.maxTemperature }}°C
               <!-- Min Temperature: {{ formattedDetails[0].details.minTemperature }}°C<br /> -->
               <!-- Max Temperature: {{ formattedDetails[0].details.maxTemperature }}°C<br /> -->
               <!-- Generated Energy: {{ formattedDetails[0].details.generatedEnergy }} kWh<br /> -->
-              Weather Code: {{ formattedDetails[0].details.weatherCode }}
+              <!-- Weather Code: {{ formattedDetails[0].details.weatherCode }} -->
             </p>
           </div>
         </div>

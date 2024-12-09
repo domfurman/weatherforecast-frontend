@@ -24,6 +24,7 @@ export class WeatherService {
         map((data) => {
           const weather = new Weather();
           weather.date = data.date;
+          weather.currentTemperature = data.currentTemperature;
 
           for (const key in data.dailyWeatherDetails) {
             if (data.dailyWeatherDetails.hasOwnProperty(key)) {

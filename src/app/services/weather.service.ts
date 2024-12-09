@@ -11,14 +11,15 @@ import { WeekSummary } from '../models/week-summary';
 export class WeatherService {
 
   private baiscUrl: string = 'http://localhost:8080'
-  private lat: number = 50.057274
-  private lon: number = 19.949356
+  // private lat: number = 50.057274
+  // private lon: number = 19.949356
+  private LOCATION_API_KEY = '3de1d3b97819426f94269744a76f8fc3'
 
   constructor(private http: HttpClient) { }
 
-  get7DayForecast(): Observable<Weather> {
+  get7DayForecast(lat: number, lon: number): Observable<Weather> {
     return this.http
-      .get<Weather>(`${this.baiscUrl}/weather?latitude=${this.lat}&longitude=${this.lon}`)
+      .get<Weather>(`${this.baiscUrl}/weather?latitude=${lat}&longitude=${lon}`)
       .pipe(
         map((data) => {
           const weather = new Weather();
@@ -41,16 +42,21 @@ export class WeatherService {
       )
   }
 
-  getWeekSummary():Observable<WeekSummary> {
+  getWeekSummary(lat: number, lon: number):Observable<WeekSummary> {
     return this.http
-    .get<WeekSummary>(`${this.baiscUrl}/week-summary?latitude=${this.lat}&longitude=${this.lon}`)
+    .get<WeekSummary>(`${this.baiscUrl}/week-summary?latitude=${lat}&longitude=${lon}`)
     .pipe(
       map((data) => {
         let weekSummary = new WeekSummary()
         weekSummary = data
-        console.log(weekSummary)
+        // console.log(weekSummary)
         return weekSummary;
       })
     )
+  }
+
+  getLocationName(lat:number, lon: number): Observable<any> {
+    const url = `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lon}&key=${this.LOCATION_API_KEY}&pretty=1`;
+    return this.http.get<any>(url);
   }
 }

@@ -1,5 +1,5 @@
 <div *ngIf="weatherData">
-    <h1>7-Day Weather Forecast</h1>
+    <h1>7-Day Weather Forecast for {{ city }}</h1>
     <div *ngFor="let date of getDates(weatherData.dailyWeatherDetails)">
         <h3>{{ date }}</h3>
         <p>Min Temperature: {{ weatherData.dailyWeatherDetails[date].minTemperature }}°C</p>

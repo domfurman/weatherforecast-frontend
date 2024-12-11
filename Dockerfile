@@ -1,6 +1,17 @@
+FROM node:18 AS build
+
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+RUN npm install
+
+COPY ./src ./src
+
+RUN npm run build --prod
+
 FROM nginx:alpine
 
-COPY dist/* /usr/share/nginx/html
+COPY --from=build /app/dist/your-angular-app /usr/share/nginx/html
 
 EXPOSE 80
 

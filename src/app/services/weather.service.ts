@@ -4,19 +4,20 @@ import { Weather } from '../models/weather';
 import { map, Observable } from 'rxjs';
 import { DailyWeatherDetails } from '../models/daily-weather-details';
 import { WeekSummary } from '../models/week-summary';
+import {environment} from '../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WeatherService {
 
-  private baiscUrl: string = 'http://localhost:8080'
+  private basicUrl: string = 'http://localhost:8080'
 
   constructor(private http: HttpClient) { }
 
   get7DayForecast(lat: number, lon: number): Observable<Weather> {
     return this.http
-      .get<Weather>(`${this.baiscUrl}/weather?latitude=${lat}&longitude=${lon}`)
+      .get<Weather>(`${environment.apiUrl}/weather?latitude=${lat}&longitude=${lon}`)
       .pipe(
         map((data) => {
           const weather = new Weather();
@@ -42,7 +43,7 @@ export class WeatherService {
 
   getWeekSummary(lat: number, lon: number):Observable<WeekSummary> {
     return this.http
-    .get<WeekSummary>(`${this.baiscUrl}/week-summary?latitude=${lat}&longitude=${lon}`)
+    .get<WeekSummary>(`${environment.apiUrl}/week-summary?latitude=${lat}&longitude=${lon}`)
     .pipe(
       map((data) => {
         let weekSummary: WeekSummary

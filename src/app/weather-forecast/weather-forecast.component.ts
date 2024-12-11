@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectorRef, Component, inject, OnInit, ViewEncapsulation} from '@angular/core';
 import { Weather } from '../models/weather';
 import { WeatherService } from '../services/weather.service';
 import { CommonModule } from '@angular/common';
@@ -9,11 +9,18 @@ import { weatherIconMapper } from '../models/weather-icon-mapper';
 import {MapComponent} from '../map/map.component';
 import {GeolocationService} from '../services/geolocation.service';
 import {ThemeService} from '../services/theme.service';
+import {HttpClient} from '@angular/common/http';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate/core';
 
 declare var bootstrap: any;
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 @Component({
     selector: 'app-weather-forecast',
-  imports: [CommonModule, NgSelectModule, FormsModule, MapComponent],
+  imports: [CommonModule, NgSelectModule, FormsModule, MapComponent
+    ],
     standalone: true,
     templateUrl: './weather-forecast.component.html',
     styleUrl: './weather-forecast.component.scss',
@@ -27,8 +34,12 @@ export class WeatherForecastComponent implements OnInit{
   formattedDetails: { date: string; day: string; details: any }[] = [];
   city: string = '';
   suggestions: any[] = [];
+  selectedLanguage: string = 'pl';
+  areCoordinatesValid: boolean = false;
+  errorMessage: string = '';
 
-  constructor(private weatherService: WeatherService, private geolocationService: GeolocationService, private themeService: ThemeService) {}
+  constructor(private weatherService: WeatherService, private geolocationService: GeolocationService, private themeService: ThemeService) {
+  }
 
   ngOnInit(): void {
     this.subscribeToCoordinates();
@@ -135,10 +146,13 @@ export class WeatherForecastComponent implements OnInit{
 
   confirmCoords(elementId: string) {
     // console.log(this.latitude, this.longitude);
-    this.changeForecastBasedOnCoordsInput();
-    const modalElement = document.getElementById(elementId);
-    const modal = bootstrap.Modal.getInstance(modalElement);
-    modal.hide();
+    this.validateCoordinates();
+    if (this.areCoordinatesValid) {
+      this.changeForecastBasedOnCoordsInput();
+      const modalElement = document.getElementById(elementId);
+      const modal = bootstrap.Modal.getInstance(modalElement);
+      modal.hide();
+    }
   }
 
   openMapModal() {
@@ -199,6 +213,23 @@ export class WeatherForecastComponent implements OnInit{
 
   changeTheme() {
     this.themeService.changeTheme();
+  }
+
+  validateCoordinates(): void {
+    try {
+      if (!this.isValidCoordinates(this.latitude, this.longitude)) {
+        throw new Error('Invalid coordinates: Latitude must be between -90 and 90, and Longitude must be between -180 and 180');
+      }
+      this.areCoordinatesValid = true; // Coordinates are valid
+      this.errorMessage = ''; // Clear any previous error message
+    } catch (error: any) {
+      this.areCoordinatesValid = false; // Coordinates are invalid
+      this.errorMessage = error.message;  // Display the error message
+    }
+  }
+
+  private isValidCoordinates(lat: number, lon: number): boolean {
+    return lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180;
   }
 
 }

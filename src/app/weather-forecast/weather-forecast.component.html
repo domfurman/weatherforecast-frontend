@@ -1,6 +1,14 @@
 <button (click)="changeTheme()">
   Toggle theme
 </button>
+<!--<div>-->
+<!--  <label>-->
+<!--    <input type="radio" name="language" value="en" [(ngModel)]="selectedLanguage" (change)="switchLanguage('en')"> English-->
+<!--  </label>-->
+<!--  <label>-->
+<!--    <input type="radio" name="language" value="pl" [(ngModel)]="selectedLanguage" (change)="switchLanguage('pl')"> Polski-->
+<!--  </label>-->
+<!--</div>-->
 <div class="container text-center">
   <div class="options row justify-content-center">
     <div class="col-2">
@@ -94,22 +102,28 @@
         <div class="mb-3">
           <label for="latitudeInput" class="form-label">Latitude</label>
           <input
-            type="text"
+            type="number"
             class="form-control"
             id="latitudeInput"
             placeholder="Enter latitude"
             [(ngModel)]="latitude"
-          >
+            (input)="validateCoordinates()"
+          />
         </div>
         <div class="mb-3">
           <label for="longitudeInput" class="form-label">Longitude</label>
           <input
-            type="text"
+            type="number"
             class="form-control"
             id="longitudeInput"
             placeholder="Enter longitude"
             [(ngModel)]="longitude"
-          >
+            (input)="validateCoordinates()"
+          />
+        </div>
+
+        <div *ngIf="!areCoordinatesValid" class="text-danger">
+          {{ errorMessage }}
         </div>
       </div>
       <div class="modal-footer">

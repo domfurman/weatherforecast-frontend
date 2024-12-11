@@ -1,0 +1,18 @@
+.map-container {
+  height: 50vh;
+}
+
+.map-frame {
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+}
+
+.map {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+}

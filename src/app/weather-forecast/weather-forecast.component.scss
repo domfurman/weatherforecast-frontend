@@ -2,7 +2,7 @@
 //     width: 100%;
 //     margin-bottom: 10px;
 //   }
-  
+
 //   button {
 //     padding: 10px;
 //     background-color: #007bff;
@@ -10,10 +10,15 @@
 //     border: none;
 //     cursor: pointer;
 //   }
-  
+
 //   button:hover {
 //     background-color: #0056b3;
 //   }
+//.forecast {
+//  background-color: green;
+//  border-radius: 10px;
+//}
+
 .weather-card {
     background-color: #f9f9f9;
     border: 1px solid #ddd;
@@ -21,9 +26,17 @@
     border-radius: 5px;
     margin-bottom: 5px;
   }
-  
+
 .weather-card[data-today="true"] {
     background-color: #367bb8;
     border: 2px solid #00bcd4;
     font-weight: bold;
+}
+
+.map-container{
+  border: 1px solid black;
+}
+
+.weather-headers {
+  padding: 10px;
 }

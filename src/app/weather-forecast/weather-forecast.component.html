@@ -1,72 +1,157 @@
-<!-- <h2>Pogoda w Twojej lokalizacji</h2> -->
-  
-<!-- <ng-select
-  [(ngModel)]="selectedCity"
-  [items]="cities"
-  (search)="searchCities($event)"
-  bindLabel="city"
-  placeholder="Wpisz miasto"
-  [virtualScroll]="true"
-  [loading]="false"
->
-</ng-select> -->
-<!-- 
-<button>Pokaż pogodę</button> -->
-<!-- <button type=”button” class=”btn”>Test Button</button> -->
-
-<!-- <div *ngIf="weatherData">
-    <h1>7-Day Weather Forecast for {{ city }}</h1>
-    <div *ngFor="let date of getDates(weatherData.dailyWeatherDetails)">
-        <h3>{{ date }}</h3>
-        <p>Min Temperature: {{ weatherData.dailyWeatherDetails[date].minTemperature }}°C</p>
-        <p>Max Temperature: {{ weatherData.dailyWeatherDetails[date].maxTemperature }}°C</p>
-        <p>Generated Energy: {{ weatherData.dailyWeatherDetails[date].generatedEnergy }} kWh</p>
-        <p>Weather code: {{ weatherData.dailyWeatherDetails[date].weatherCode }}</p>
+<div class="container text-center">
+  <div class="options row justify-content-center">
+    <div class="col-2">
+      <button class="btn btn-primary" (click)="openCoordinateModal()">Enter coordinates</button>
     </div>
-</div> -->
-<!-- <h3>{{ city }}</h3> -->
+
+    <div class="col-2">
+      <button class="btn btn-primary" (click)="openMapModal()">Set place on map</button>
+    </div>
+
+    <div class="col-2">
+      <button class="btn btn-primary" (click)="openPlaceSearchModal()">Search for place</button>
+    </div>
+  </div>
+</div>
+
 <div>
     <div class="container text-center">
         <div class="col-12">
           <div class="weather-card p-3 border rounded" [attr.data-today]="'true'">
             <h3><i class="fa-solid fa-location-arrow"></i> {{ city }}</h3>
             <p>
-              <!-- <strong>{{ formattedDetails[0].date }} ({{ formattedDetails[0].day }})</strong><br /> -->
               {{ weatherData?.currentTemperature }}°C <br />
               From {{ formattedDetails[0].details.minTemperature }}°C to {{ formattedDetails[0].details.maxTemperature }}°C
-              <!-- Min Temperature: {{ formattedDetails[0].details.minTemperature }}°C<br /> -->
-              <!-- Max Temperature: {{ formattedDetails[0].details.maxTemperature }}°C<br /> -->
-              <!-- Generated Energy: {{ formattedDetails[0].details.generatedEnergy }} kWh<br /> -->
-              <!-- Weather Code: {{ formattedDetails[0].details.weatherCode }} -->
             </p>
           </div>
         </div>
     </div>
 </div>
-<div *ngIf="formattedDetails.length > 0" class="container text-center">
-    <div class="row">
-      <div class="col-12">
-        <div *ngFor="let item of formattedDetails; let i = index" class="weather-card d-flex p-3 border rounded mb-3">
-          <div class="weather-info flex-grow-1">
-            <strong>{{ item.date }} ({{ i === 0 ? 'Today' : item.day }})</strong>
-          </div>
-          <div class="weather-info">
-            Min Temperature: {{ item.details.minTemperature }}°C
-          </div>
-          <div class="weather-info">
-            Max Temperature: {{ item.details.maxTemperature }}°C
-          </div>
-          <div class="weather-info">
-            Generated Energy: {{ item.details.generatedEnergy }} kWh
-          </div>
-          <div class="weather-info">
-            <i [ngClass]="mapWeatherIcon(item.details.weatherCode)"></i>
-            <!-- Weather Code: {{ item.details.weatherCode }} -->
-          </div>
+
+
+
+<div class="modal fade" id="placeSearchModal" tabindex="-1" aria-labelledby="placeSearchModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="placeSearchModalLabel">Search for place</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+<!--          <label for="longitudeInput" class="form-label">Longitude</label>-->
+          <input
+            type="text"
+            class="form-control"
+            id="placeInput"
+            placeholder="Start typing"
+            (input)="onSearch($event)"
+          >
+          <ul *ngIf="suggestions.length > 0">
+            <li *ngFor="let suggestion of suggestions" (click)="selectSuggestion(suggestion)">
+              {{ suggestion.display_name }}
+            </li>
+          </ul>
         </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="confirmCoords('placeSearchModal')">Confirm</button>
       </div>
     </div>
   </div>
+</div>
+
+<div class="modal fade" id="mapModal" tabindex="-1" aria-labelledby="mapModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="mapModalLabel">Enter coordinates</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="map-container">
+          <app-map></app-map>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="confirmCoords('mapModal')">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="coordinateModal" tabindex="-1" aria-labelledby="coordinateModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="coordinateModalLabel">Enter coordinates</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="latitudeInput" class="form-label">Latitude</label>
+          <input
+            type="text"
+            class="form-control"
+            id="latitudeInput"
+            placeholder="Enter latitude"
+            [(ngModel)]="latitude"
+          >
+        </div>
+        <div class="mb-3">
+          <label for="longitudeInput" class="form-label">Longitude</label>
+          <input
+            type="text"
+            class="form-control"
+            id="longitudeInput"
+            placeholder="Enter longitude"
+            [(ngModel)]="longitude"
+          >
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="confirmCoords('coordinateModal')">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="formattedDetails.length > 0" class="container text-center forecast">
+  <div class="weather-headers row">
+    <div class="col-2 d-flex align-items-center justify-content-center">Date</div>
+    <div class="col-1 d-flex align-items-center justify-content-center">Conditions</div>
+    <div class="col-3 d-flex align-items-center justify-content-center">Maximum temperature</div>
+    <div class="col-3 d-flex align-items-center justify-content-center">Minimum temperature</div>
+    <div class="col-3 d-flex align-items-center justify-content-center">Estimated generated energy</div>
+
+  </div>
+    <div *ngFor="let item of formattedDetails; let i = index" class="weather-card row">
+
+      <div class="col-2 d-flex align-items-center justify-content-center">
+        <strong>{{ i === 0 ? 'Today' : item.day }} <br /> {{ item.date }}</strong>
+      </div>
+
+      <div class="weather-icon col-1 d-flex align-items-center justify-content-center">
+        <i [ngClass]="mapWeatherIcon(item.details.weatherCode)"></i>
+      </div>
+
+      <div class="weather-info col-3 d-flex align-items-center justify-content-center">
+        {{ item.details.minTemperature }}°C
+      </div>
+
+      <div class="weather-info col-3 d-flex align-items-center justify-content-center">
+        {{ item.details.maxTemperature }}°C
+      </div>
+
+      <div class="weather-info col-3 d-flex align-items-center justify-content-center">
+        {{ item.details.generatedEnergy }} kWh
+      </div>
+
+    </div>
+</div>
 
 <div *ngIf="weekSummary">
     <h1>Week Summary</h1>

@@ -11,9 +11,6 @@ import { WeekSummary } from '../models/week-summary';
 export class WeatherService {
 
   private baiscUrl: string = 'http://localhost:8080'
-  // private lat: number = 50.057274
-  // private lon: number = 19.949356
-  private LOCATION_API_KEY = '3de1d3b97819426f94269744a76f8fc3'
 
   constructor(private http: HttpClient) { }
 
@@ -48,27 +45,12 @@ export class WeatherService {
     .get<WeekSummary>(`${this.baiscUrl}/week-summary?latitude=${lat}&longitude=${lon}`)
     .pipe(
       map((data) => {
-        let weekSummary = new WeekSummary()
+        let weekSummary: WeekSummary
         weekSummary = data
         // console.log(weekSummary)
         return weekSummary;
       })
     )
-  }
-
-  getLocationName(lat:number, lon: number): Observable<any> {
-    const url = `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lon}&key=${this.LOCATION_API_KEY}&pretty=1`;
-    return this.http.get<any>(url);
-  }
-
-  getLocationSuggestions(query: string): Observable<any> {
-    const url = `https://api.opencagedata.com/geocode/v1/json?q=${query}&key=${this.LOCATION_API_KEY}&no_annotations=1&limit=5&types=locality`;
-    return this.http.get<any>(url);
-  }
-
-  getLocationNameByCityName(cityName: string): Observable<any> {
-    const url = `https://api.opencagedata.com/geocode/v1/json?q=${cityName}&key=${this.LOCATION_API_KEY}`;
-    return this.http.get<any>(url);
   }
 
 }

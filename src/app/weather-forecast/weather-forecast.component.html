@@ -1,15 +1,18 @@
+<button (click)="changeTheme()">
+  Toggle theme
+</button>
 <div class="container text-center">
   <div class="options row justify-content-center">
     <div class="col-2">
-      <button class="btn btn-primary" (click)="openCoordinateModal()">Enter coordinates</button>
+      <button class="btn btn-primary opt-btns" (click)="openCoordinateModal()">Enter coordinates</button>
     </div>
 
     <div class="col-2">
-      <button class="btn btn-primary" (click)="openMapModal()">Set place on map</button>
+      <button class="btn btn-primary opt-btns" (click)="openMapModal()">Set place on map</button>
     </div>
 
     <div class="col-2">
-      <button class="btn btn-primary" (click)="openPlaceSearchModal()">Search for place</button>
+      <button class="btn btn-primary opt-btns" (click)="openPlaceSearchModal()">Search for place</button>
     </div>
   </div>
 </div>
@@ -17,12 +20,10 @@
 <div>
     <div class="container text-center">
         <div class="col-12">
-          <div class="weather-card p-3 border rounded" [attr.data-today]="'true'">
-            <h3><i class="fa-solid fa-location-arrow"></i> {{ city }}</h3>
-            <p>
-              {{ weatherData?.currentTemperature }}°C <br />
-              From {{ formattedDetails[0].details.minTemperature }}°C to {{ formattedDetails[0].details.maxTemperature }}°C
-            </p>
+          <div class="weather-card p-3" [attr.data-today]="'true'">
+            <h3 id="current-location"><i class="fa-solid fa-location-arrow"></i> {{ city }}</h3>
+            <h1 id="current-temperature">{{ weatherData?.currentTemperature }}°C</h1>
+            <p>From {{ formattedDetails[0].details.minTemperature }}°C to {{ formattedDetails[0].details.maxTemperature }}°C</p>
           </div>
         </div>
     </div>
@@ -120,6 +121,14 @@
 </div>
 
 <div *ngIf="formattedDetails.length > 0" class="container text-center forecast">
+
+  <div class="header row">
+    <div class="col d-flex align-items-center">
+      <i class="fa-solid fa-calendar-days" id="calendar-icon"></i>
+      <span class="ms-2">Weather Forecast (7 days)</span>
+    </div>
+  </div>
+
   <div class="weather-headers row">
     <div class="col-2 d-flex align-items-center justify-content-center">Date</div>
     <div class="col-1 d-flex align-items-center justify-content-center">Conditions</div>
@@ -153,11 +162,58 @@
     </div>
 </div>
 
-<div *ngIf="weekSummary">
-    <h1>Week Summary</h1>
-    <p>Average Pressure: {{ weekSummary.averagePressure }}</p>
-    <p>Average Sunshine Duration: {{ weekSummary.averageSunshineDuration }}</p>
-    <p>Highest Temperature: {{ weekSummary.highestTemperature }}</p>
-    <p>Lowest Temperature: {{ weekSummary.lowestTemperature }}</p>
-    <p>{{ weekSummary.isWeekRainy ? 'Week is rainy' : 'Week is not rainy' }}</p>
+<div class="container text-center week-summary" *ngIf="weekSummary">
+  <div class="row week-summary-header d-flex align-items-center justify-content-center">
+    <h4>Week summary</h4>
+  </div>
+
+  <div class="row week-summary-card d-flex align-items-center justify-content-center">
+    <div class="col-3">
+      Average Pressure
+    </div>
+    <div class="col-3">
+      {{ weekSummary.averagePressure }} hPa
+    </div>
+  </div>
+
+  <div class="row week-summary-card d-flex align-items-center justify-content-center">
+    <div class="col-3">
+      Average Sunshine Duration
+    </div>
+    <div class="col-3">
+      {{ weekSummary.averageSunshineDuration }}h
+    </div>
+  </div>
+
+  <div class="row week-summary-card d-flex align-items-center justify-content-center">
+    <div class="col-3">
+      Highest Temperature
+    </div>
+    <div class="col-3">
+      {{ weekSummary.highestTemperature }}°C
+    </div>
+  </div>
+
+  <div class="row week-summary-card d-flex align-items-center justify-content-center">
+    <div class="col-3">
+      Lowest Temperature
+    </div>
+    <div class="col-3">
+      {{ weekSummary.lowestTemperature }}°C
+    </div>
+  </div>
+
+  <div class="row week-summary-card d-flex align-items-center justify-content-center">
+    <div class="col-6">
+      {{ weekSummary.isWeekRainy ? 'Week is rainy' : 'Week is not rainy' }}
+    </div>
+  </div>
 </div>
+<!--<div *ngIf="weekSummary">-->
+<!--    <h1>Week Summary</h1>-->
+<!--    <p>Average Pressure: {{ weekSummary.averagePressure }}</p>-->
+<!--    <p>Average Sunshine Duration: {{ weekSummary.averageSunshineDuration }}</p>-->
+<!--    <p>Highest Temperature: {{ weekSummary.highestTemperature }}</p>-->
+<!--    <p>Lowest Temperature: {{ weekSummary.lowestTemperature }}</p>-->
+<!--    <p>{{ weekSummary.isWeekRainy ? 'Week is rainy' : 'Week is not rainy' }}</p>-->
+<!--</div>-->

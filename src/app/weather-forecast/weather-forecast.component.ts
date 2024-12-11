@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import { Weather } from '../models/weather';
 import { WeatherService } from '../services/weather.service';
 import { CommonModule } from '@angular/common';
@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { weatherIconMapper } from '../models/weather-icon-mapper';
 import {MapComponent} from '../map/map.component';
 import {GeolocationService} from '../services/geolocation.service';
+import {ThemeService} from '../services/theme.service';
 
 declare var bootstrap: any;
 @Component({
@@ -15,7 +16,8 @@ declare var bootstrap: any;
   imports: [CommonModule, NgSelectModule, FormsModule, MapComponent],
     standalone: true,
     templateUrl: './weather-forecast.component.html',
-    styleUrl: './weather-forecast.component.scss'
+    styleUrl: './weather-forecast.component.scss',
+    encapsulation: ViewEncapsulation.None
 })
 export class WeatherForecastComponent implements OnInit{
   weatherData?: Weather;
@@ -26,7 +28,7 @@ export class WeatherForecastComponent implements OnInit{
   city: string = '';
   suggestions: any[] = [];
 
-  constructor(private weatherService: WeatherService, private geolocationService: GeolocationService, private cdr: ChangeDetectorRef) {}
+  constructor(private weatherService: WeatherService, private geolocationService: GeolocationService, private themeService: ThemeService) {}
 
   ngOnInit(): void {
     this.subscribeToCoordinates();
@@ -193,6 +195,10 @@ export class WeatherForecastComponent implements OnInit{
         this.selectFromMap(coords.lat, coords.lng, 'mapModal');
       }
     });
+  }
+
+  changeTheme() {
+    this.themeService.changeTheme();
   }
 
 }

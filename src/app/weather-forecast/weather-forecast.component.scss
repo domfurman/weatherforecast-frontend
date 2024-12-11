@@ -78,3 +78,8 @@ body {
 #calendar-icon {
   vertical-align: middle;
 }
+
+.modal-body, .modal-footer, .modal-header {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}

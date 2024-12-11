@@ -37,6 +37,7 @@ export class WeatherForecastComponent implements OnInit{
   selectedLanguage: string = 'pl';
   areCoordinatesValid: boolean = false;
   errorMessage: string = '';
+  isLoading: boolean = true;
 
   constructor(private weatherService: WeatherService, private geolocationService: GeolocationService, private themeService: ThemeService) {
   }
@@ -65,9 +66,24 @@ export class WeatherForecastComponent implements OnInit{
         this.geolocationService.getLocationName(this.latitude, this.longitude).subscribe((data) => {
           this.city = data.results[0].components.city;
         });
+        this.isLoading = false;
       },
       error: (err) => {
         console.error('Error getting geolocation:', err);
+        const krakowCoordinates = { latitude: 50.0647, longitude: 19.945 };
+        this.weatherService.get7DayForecast(krakowCoordinates.latitude, krakowCoordinates.longitude).subscribe((data) => {
+          this.weatherData = data;
+          this.formatWeatherDetails();
+        });
+        this.weatherService.getWeekSummary(krakowCoordinates.latitude, krakowCoordinates.longitude).subscribe({
+          next: (data) => {
+            this.weekSummary = data;
+          },
+          error: (err) => {
+            console.error(err);
+          },
+        });
+        this.isLoading = false;
       },
     });
   }

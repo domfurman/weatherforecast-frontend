@@ -14,8 +14,6 @@ export class WeatherService {
   constructor(private http: HttpClient) { }
 
   get7DayForecast(lat: number, lon: number): Observable<Weather> {
-    console.log('Current environment:', environment.production);
-    console.log('API URL:', environment.apiUrl)
     return this.http
       .get<Weather>(`${environment.apiUrl}/weather?latitude=${lat}&longitude=${lon}`)
       .pipe(

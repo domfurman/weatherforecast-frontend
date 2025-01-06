@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GeolocationService {
-  private LOCATION_API_KEY = '3de1d3b97819426f94269744a76f8fc3'
+  private LOCATION_API_KEY = environment.locationApiUrl;
   private coordinatesSubject = new BehaviorSubject<{ lat: number; lng: number } | null>(null);
   coordinates$ = this.coordinatesSubject.asObservable();
   constructor(private http: HttpClient) {}

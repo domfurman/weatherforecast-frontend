@@ -11,8 +11,6 @@ import {environment} from '../../environments/environment.prod';
 })
 export class WeatherService {
 
-  private basicUrl: string = 'http://localhost:8080'
-
   constructor(private http: HttpClient) { }
 
   get7DayForecast(lat: number, lon: number): Observable<Weather> {
@@ -48,7 +46,6 @@ export class WeatherService {
       map((data) => {
         let weekSummary: WeekSummary
         weekSummary = data
-        // console.log(weekSummary)
         return weekSummary;
       })
     )

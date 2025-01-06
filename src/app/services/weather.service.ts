@@ -4,7 +4,7 @@ import { Weather } from '../models/weather';
 import { map, Observable } from 'rxjs';
 import { DailyWeatherDetails } from '../models/daily-weather-details';
 import { WeekSummary } from '../models/week-summary';
-import {environment} from '../../environments/environment.prod';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +14,8 @@ export class WeatherService {
   constructor(private http: HttpClient) { }
 
   get7DayForecast(lat: number, lon: number): Observable<Weather> {
+    console.log('Current environment:', environment.production);
+    console.log('API URL:', environment.apiUrl)
     return this.http
       .get<Weather>(`${environment.apiUrl}/weather?latitude=${lat}&longitude=${lon}`)
       .pipe(

@@ -151,9 +151,6 @@ export class WeatherForecastComponent implements OnInit{
       } else {
         this.city = 'Unknown location';
       }
-
-      // console.log(location);
-      // console.log('Resolved location:', this.city);
     });
   }
 
@@ -164,7 +161,6 @@ export class WeatherForecastComponent implements OnInit{
   }
 
   confirmCoords(elementId: string) {
-    // console.log(this.latitude, this.longitude);
     this.validateCoordinates();
     if (this.areCoordinatesValid) {
       this.changeForecastBasedOnCoordsInput();
@@ -197,7 +193,6 @@ export class WeatherForecastComponent implements OnInit{
   }
 
   selectSuggestion(suggestion: any): void {
-    // console.log('Selected place:',suggestion.lat, suggestion.lon);
     this.latitude = suggestion.lat;
     this.longitude = suggestion.lon;
     this.changeForecastBasedOnCoordsInput();
@@ -239,11 +234,11 @@ export class WeatherForecastComponent implements OnInit{
       if (!this.isValidCoordinates(this.latitude, this.longitude)) {
         throw new Error('Invalid coordinates: Latitude must be between -90 and 90, and Longitude must be between -180 and 180');
       }
-      this.areCoordinatesValid = true; // Coordinates are valid
-      this.errorMessage = ''; // Clear any previous error message
+      this.areCoordinatesValid = true;
+      this.errorMessage = '';
     } catch (error: any) {
-      this.areCoordinatesValid = false; // Coordinates are invalid
-      this.errorMessage = error.message;  // Display the error message
+      this.areCoordinatesValid = false;
+      this.errorMessage = error.message;
     }
   }
 

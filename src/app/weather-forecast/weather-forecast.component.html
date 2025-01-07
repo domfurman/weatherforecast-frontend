@@ -9,43 +9,46 @@
   <div class="container">
     <div class="row align-items-center">
       <div class="col-auto">
-        <button class="btn btn-primary opt-btns" (click)="openCoordinateModal()">Enter coordinates</button>
+        <button class="btn btn-primary opt-btns" (click)="openCoordinateModal()">{{ 'enter_coordinates' | translate }}</button>
       </div>
 
       <div class="col-auto">
-        <button class="btn btn-primary opt-btns" (click)="openMapModal()">Set place on map</button>
+        <button class="btn btn-primary opt-btns" (click)="openMapModal()">{{ 'set_place_on_map' | translate }}</button>
       </div>
 
       <div class="col-auto">
-        <button class="btn btn-primary opt-btns" (click)="openPlaceSearchModal()">Search for place</button>
+        <button class="btn btn-primary opt-btns" (click)="openPlaceSearchModal()">{{ 'search_for_place' | translate }}</button>
       </div>
 
       <div class="col text-end">
-        <button class="btn btn-primary opt-btns" (click)="changeTheme()">Change theme</button>
+        <button class="btn btn-primary opt-btns" (click)="changeTheme()">{{ 'toggle_theme' | translate }}</button>
       </div>
     </div>
+
+      <div class="radio-input language-group">
+        <label>
+          <input
+            type="radio"
+            name="language"
+            id="langEn"
+            (change)="toggleLanguage()"
+            [checked]="language === 'en'"
+          />
+          <span>EN</span>
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="language"
+            id="langPl"
+            (change)="toggleLanguage()"
+            [checked]="language === 'pl'"
+          />
+          <span>PL</span>
+        </label>
+        <span class="selection"></span>
+      </div>
   </div>
-
-  <!--<div class="container text-center">-->
-  <!--  <div class="options row justify-content-center">-->
-  <!--    <div class="col-2">-->
-  <!--      <button class="btn btn-primary opt-btns" (click)="openCoordinateModal()">Enter coordinates</button>-->
-  <!--    </div>-->
-
-  <!--    <div class="col-2">-->
-  <!--      <button class="btn btn-primary opt-btns" (click)="openMapModal()">Set place on map</button>-->
-  <!--    </div>-->
-
-  <!--    <div class="col-2">-->
-  <!--      <button class="btn btn-primary opt-btns" (click)="openPlaceSearchModal()">Search for place</button>-->
-  <!--    </div>-->
-  <!--  </div>-->
-
-  <!--  <div class="col-2 ml-auto">-->
-  <!--    <button class="btn btn-primary opt-btns" (click)="changeTheme()">Toggle theme</button>-->
-  <!--  </div>-->
-
-  <!--</div>-->
 
   <div>
     <div class="container text-center">
@@ -53,24 +56,21 @@
         <div class="weather-card p-3" [attr.data-today]="'true'">
           <h3 id="current-location"><i class="fa-solid fa-location-arrow"></i> {{ city }}</h3>
           <h1 id="current-temperature">{{ weatherData?.currentTemperature }}°C</h1>
-          <p>From {{ formattedDetails[0].details.minTemperature }}°C to {{ formattedDetails[0].details.maxTemperature }}°C</p>
+          <p>{{ 'from' | translate }} {{ formattedDetails[0].details.minTemperature }}°C {{ 'to' | translate }} {{ formattedDetails[0].details.maxTemperature }}°C</p>
         </div>
       </div>
     </div>
   </div>
 
-
-
   <div class="modal fade" id="placeSearchModal" tabindex="-1" aria-labelledby="placeSearchModal" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="placeSearchModalLabel">Search for place</h5>
+          <h5 class="modal-title" id="placeSearchModalLabel">{{ 'search_for_place_modal_title' | translate }}</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <div class="mb-3">
-            <!--          <label for="longitudeInput" class="form-label">Longitude</label>-->
             <input
               type="text"
               class="form-control"
@@ -86,8 +86,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary" (click)="confirmCoords('placeSearchModal')">Confirm</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'cancel' | translate }}</button>
+          <button type="button" class="btn btn-primary" (click)="confirmCoords('placeSearchModal')">{{ 'confirm' | translate }}</button>
         </div>
       </div>
     </div>
@@ -97,7 +97,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="mapModalLabel">Enter coordinates</h5>
+          <h5 class="modal-title" id="mapModalLabel">{{ 'enter_coordinates_modal_title' | translate }}</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -106,8 +106,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary" (click)="confirmCoords('mapModal')">Confirm</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'cancel' | translate }}</button>
+          <button type="button" class="btn btn-primary" (click)="confirmCoords('mapModal')">{{ 'confirm' | translate }}</button>
         </div>
       </div>
     </div>
@@ -117,12 +117,12 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="coordinateModalLabel">Enter coordinates</h5>
+          <h5 class="modal-title" id="coordinateModalLabel">{{ 'enter_coordinates_modal_title' | translate }}</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <div class="mb-3">
-            <label for="latitudeInput" class="form-label">Latitude</label>
+            <label for="latitudeInput" class="form-label">{{ 'latitude' | translate }}</label>
             <input
               type="number"
               class="form-control"
@@ -133,7 +133,7 @@
             />
           </div>
           <div class="mb-3">
-            <label for="longitudeInput" class="form-label">Longitude</label>
+            <label for="longitudeInput" class="form-label">{{ 'longitude' | translate }}</label>
             <input
               type="number"
               class="form-control"
@@ -149,8 +149,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary" (click)="confirmCoords('coordinateModal')">Confirm</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'cancel' | translate }}</button>
+          <button type="button" class="btn btn-primary" (click)="confirmCoords('coordinateModal')">{{ 'confirm' | translate }}</button>
         </div>
       </div>
     </div>
@@ -161,16 +161,16 @@
     <div class="header row">
       <div class="col d-flex align-items-center">
         <i class="fa-solid fa-calendar-days" id="calendar-icon"></i>
-        <span class="ms-2">Weather Forecast (7 days)</span>
+        <span class="ms-2">{{ 'weather_forecast' | translate }}</span>
       </div>
     </div>
 
     <div class="weather-headers row">
-      <div class="col-2 d-flex align-items-center justify-content-center">Date</div>
-      <div class="col-1 d-flex align-items-center justify-content-center">Conditions</div>
-      <div class="col-3 d-flex align-items-center justify-content-center">Maximum temperature</div>
-      <div class="col-3 d-flex align-items-center justify-content-center">Minimum temperature</div>
-      <div class="col-3 d-flex align-items-center justify-content-center">Estimated generated energy</div>
+      <div class="col-2 d-flex align-items-center justify-content-center">{{ 'date' | translate }}</div>
+      <div class="col-1 d-flex align-items-center justify-content-center">{{ 'conditions' | translate }}</div>
+      <div class="col-3 d-flex align-items-center justify-content-center">{{ 'max_temperature' | translate }}</div>
+      <div class="col-3 d-flex align-items-center justify-content-center">{{ 'min_temperature' | translate }}</div>
+      <div class="col-3 d-flex align-items-center justify-content-center">{{ 'generated_energy' | translate }}</div>
 
     </div>
     <div *ngFor="let item of formattedDetails; let i = index" class="weather-card row">
@@ -200,12 +200,12 @@
 
   <div class="container text-center week-summary" *ngIf="weekSummary">
     <div class="row week-summary-header d-flex align-items-center justify-content-center">
-      <h4>Week summary</h4>
+      <h4>{{ 'week_summary' | translate }}</h4>
     </div>
 
     <div class="row week-summary-card d-flex align-items-center justify-content-center">
       <div class="col-3">
-        Average Pressure
+        {{ 'average_pressure' | translate }}
       </div>
       <div class="col-3">
         {{ weekSummary.averagePressure }} hPa
@@ -214,7 +214,7 @@
 
     <div class="row week-summary-card d-flex align-items-center justify-content-center">
       <div class="col-3">
-        Average Sunshine Duration
+        {{ 'average_sunshine_duration' | translate }}
       </div>
       <div class="col-3">
         {{ weekSummary.averageSunshineDuration }}h
@@ -223,7 +223,7 @@
 
     <div class="row week-summary-card d-flex align-items-center justify-content-center">
       <div class="col-3">
-        Highest Temperature
+        {{ 'highest_temperature' | translate }}
       </div>
       <div class="col-3">
         {{ weekSummary.highestTemperature }}°C
@@ -232,7 +232,7 @@
 
     <div class="row week-summary-card d-flex align-items-center justify-content-center">
       <div class="col-3">
-        Lowest Temperature
+        {{ 'lowest_temperature' | translate }}
       </div>
       <div class="col-3">
         {{ weekSummary.lowestTemperature }}°C
@@ -241,7 +241,7 @@
 
     <div class="row week-summary-card d-flex align-items-center justify-content-center">
       <div class="col-6">
-        {{ weekSummary.isWeekRainy ? 'Week is rainy' : 'Week is not rainy' }}
+        {{ weekSummary.isWeekRainy ? ('rainy_week' | translate) : ('not_rainy_week' | translate) }}
       </div>
     </div>
   </div>

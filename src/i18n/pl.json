@@ -12,6 +12,8 @@
   "latitude": "Szerokość geograficzna",
   "longitude": "Długość geograficzna",
   "weather_forecast": "Prognoza pogody (7 dni)",
+  "from": "Od",
+  "to": "do",
   "date": "Data",
   "conditions": "Warunki",
   "max_temperature": "Maksymalna temperatura",

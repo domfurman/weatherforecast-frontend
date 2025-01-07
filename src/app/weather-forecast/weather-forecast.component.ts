@@ -9,18 +9,18 @@ import { weatherIconMapper } from '../models/weather-icon-mapper';
 import {MapComponent} from '../map/map.component';
 import {GeolocationService} from '../services/geolocation.service';
 import {ThemeService} from '../services/theme.service';
-import {HttpClient} from '@angular/common/http';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import {TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate/core';
+import {
+  TranslateModule,
+  TranslateService, TranslateStore
+} from '@ngx-translate/core';
 
 declare var bootstrap: any;
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
+
 @Component({
     selector: 'app-weather-forecast',
-  imports: [CommonModule, NgSelectModule, FormsModule, MapComponent
+  imports: [CommonModule, NgSelectModule, FormsModule, MapComponent, TranslateModule
     ],
+  providers: [TranslateStore],
     standalone: true,
     templateUrl: './weather-forecast.component.html',
     styleUrl: './weather-forecast.component.scss',
@@ -34,12 +34,15 @@ export class WeatherForecastComponent implements OnInit{
   formattedDetails: { date: string; day: string; details: any }[] = [];
   city: string = '';
   suggestions: any[] = [];
-  selectedLanguage: string = 'pl';
   areCoordinatesValid: boolean = false;
   errorMessage: string = '';
   isLoading: boolean = true;
+  language: string = 'en';
 
-  constructor(private weatherService: WeatherService, private geolocationService: GeolocationService, private themeService: ThemeService) {
+  constructor(private weatherService: WeatherService, private geolocationService: GeolocationService, private themeService: ThemeService, private translate: TranslateService) {
+    this.translate.addLangs(['pl', 'en']);
+    this.translate.setDefaultLang('en');
+    this.translate.use('en');
   }
 
   ngOnInit(): void {
@@ -246,6 +249,15 @@ export class WeatherForecastComponent implements OnInit{
 
   private isValidCoordinates(lat: number, lon: number): boolean {
     return lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180;
+  }
+
+  useLanguage(language: string): void {
+    this.translate.use(language);
+  }
+
+  toggleLanguage() {
+    this.language = this.language === 'en' ? 'pl' : 'en';
+    this.useLanguage(this.language);
   }
 
 }

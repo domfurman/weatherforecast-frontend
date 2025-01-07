@@ -12,6 +12,8 @@
   "latitude": "Latitude",
   "longitude": "Longitude",
   "weather_forecast": "Weather Forecast (7 days)",
+  "from": "From",
+  "to": "To",
   "date": "Date",
   "conditions": "Conditions",
   "max_temperature": "Maximum temperature",

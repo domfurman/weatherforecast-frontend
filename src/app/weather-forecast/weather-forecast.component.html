@@ -165,29 +165,45 @@
       </div>
     </div>
 
-    <div class="table-responsive">
-      <table class="table">
+    <div class="table-responsive weather-card">
+      <table class="table weather-table" data-bs-theme="light">
         <thead>
         <tr>
-          <th scope="col">{{ 'date' | translate }}</th>
-          <th scope="col">{{ 'conditions' | translate }}</th>
-          <th scope="col">{{ 'min_temperature' | translate }}</th>
-          <th scope="col">{{ 'max_temperature' | translate }}</th>
-          <th scope="col">{{ 'generated_energy' | translate }}</th>
+          <th scope="col">
+            <span class="weather-headers">{{ 'date' | translate }}</span>
+          </th>
+          <th scope="col">
+            <span class="weather-headers">{{ 'conditions' | translate }}</span>
+          </th>
+          <th scope="col">
+            <span class="weather-headers">{{ 'min_temperature' | translate }}</span>
+          </th>
+          <th scope="col">
+            <span class="weather-headers">{{ 'max_temperature' | translate }}</span>
+          </th>
+          <th scope="col">
+            <span class="weather-headers">{{ 'generated_energy' | translate }}</span>
+          </th>
         </tr>
         </thead>
 
         <tbody *ngFor="let item of formattedDetails; let i = index">
-        <tr>
+        <tr class="weather-row">
           <th scope="row">
-            {{ (i === 0 ? 'today' : item.day) | translate }} <br /> {{ item.date }}
+            <span class="weather-item">{{ (i === 0 ? 'today' : item.day) | translate }} <br /> {{ item.date }}</span>
           </th>
           <td>
-            <i [ngClass]="mapWeatherIcon(item.details.weatherCode)"></i>
+            <span class="weather-item"><i [ngClass]="mapWeatherIcon(item.details.weatherCode)"></i></span>
           </td>
-          <td>{{ item.details.minTemperature }}°C</td>
-          <td>{{ item.details.maxTemperature }}°C</td>
-          <td>{{ item.details.generatedEnergy }} kWh</td>
+          <td>
+            <span class="weather-item">{{ item.details.minTemperature }}°C</span>
+          </td>
+          <td>
+            <span class="weather-item">{{ item.details.maxTemperature }}°C</span>
+          </td>
+          <td>
+            <span class="weather-item">{{ item.details.generatedEnergy }} kWh</span>
+          </td>
         </tr>
         </tbody>
       </table>

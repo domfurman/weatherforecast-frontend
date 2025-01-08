@@ -1,4 +1,3 @@
-
 :root {
   --bg-color: #ffffff;
   --border-color: #faf8f8;
@@ -21,6 +20,11 @@
   --btn-shadow-active-light: inset 4px 4px 12px #222, inset -4px -4px 12px #444;
 }
 
+:host {
+  --bs-table-bg: var(--bg-color)
+}
+
+
 body {
   background-color: var(--bg-color);
   color: var(--text-color);
@@ -39,6 +43,26 @@ body {
 
 .weather-card[data-today="true"] {
   font-weight: bold;
+}
+
+.weather-headers {
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.weather-row {
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--bg-color);
+}
+
+.weather-item {
+  padding: 8px;
+  text-align: center;
+  color: var(--text-color);
+  i {
+    font-size: 1.5em;
+    color: var(--text-color);
+  }
 }
 
 .map-container{

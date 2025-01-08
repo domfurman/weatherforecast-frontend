@@ -229,6 +229,13 @@ export class WeatherForecastComponent implements OnInit{
 
   changeTheme() {
     this.themeService.changeTheme();
+    const table = document.querySelector('.table.weather-table') as HTMLElement;
+
+    if (table) {
+      const currentTheme = table.getAttribute('data-bs-theme');
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+      table.setAttribute('data-bs-theme', newTheme);
+    }
   }
 
   validateCoordinates(): void {

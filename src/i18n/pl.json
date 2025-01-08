@@ -27,5 +27,12 @@
   "lowest_temperature": "Najniższa temperatura",
   "rainy_week": "Tydzień jest deszczowy",
   "not_rainy_week": "Tydzień nie jest deszczowy",
-  "current_location": "Aktualna lokalizacja"
+  "current_location": "Aktualna lokalizacja",
+  "monday": "Poniedziałek",
+  "tuesday": "Wtorek",
+  "wednesday": "Środa",
+  "thursday": "Czwartek",
+  "friday": "Piątek",
+  "saturday": "Sobota",
+  "sunday": "Niedziela"
 }

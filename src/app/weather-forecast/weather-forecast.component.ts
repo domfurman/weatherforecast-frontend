@@ -15,6 +15,8 @@ import {
 } from '@ngx-translate/core';
 
 declare var bootstrap: any;
+type Language = 'en' | 'pl' | string;
+type Translations = Record<Language, Record<string, string>>;
 
 @Component({
     selector: 'app-weather-forecast',
@@ -93,7 +95,7 @@ export class WeatherForecastComponent implements OnInit{
 
   formatWeatherDetails(): void {
     if (this.weatherData?.dailyWeatherDetails) {
-      const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      const daysOfWeek = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
 
       const today = new Date();
       const todayIndex = today.getDay();

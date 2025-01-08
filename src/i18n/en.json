@@ -27,5 +27,12 @@
   "lowest_temperature": "Lowest Temperature",
   "rainy_week": "Week is rainy",
   "not_rainy_week": "Week is not rainy",
-  "current_location": "Current Location"
+  "current_location": "Current Location",
+  "monday": "Monday",
+  "tuesday": "Tuesday",
+  "wednesday": "Wednesday",
+  "thursday": "Thursday",
+  "friday": "Friday",
+  "saturday": "Saturday",
+  "sunday": "Sunday"
 }

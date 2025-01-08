@@ -165,36 +165,32 @@
       </div>
     </div>
 
-    <div class="weather-headers row">
-      <div class="col-2 d-flex align-items-center justify-content-center">{{ 'date' | translate }}</div>
-      <div class="col-1 d-flex align-items-center justify-content-center">{{ 'conditions' | translate }}</div>
-      <div class="col-3 d-flex align-items-center justify-content-center">{{ 'max_temperature' | translate }}</div>
-      <div class="col-3 d-flex align-items-center justify-content-center">{{ 'min_temperature' | translate }}</div>
-      <div class="col-3 d-flex align-items-center justify-content-center">{{ 'generated_energy' | translate }}</div>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">{{ 'date' | translate }}</th>
+          <th scope="col">{{ 'conditions' | translate }}</th>
+          <th scope="col">{{ 'min_temperature' | translate }}</th>
+          <th scope="col">{{ 'max_temperature' | translate }}</th>
+          <th scope="col">{{ 'generated_energy' | translate }}</th>
+        </tr>
+        </thead>
 
-    </div>
-    <div *ngFor="let item of formattedDetails; let i = index" class="weather-card row">
-
-      <div class="col-2 d-flex align-items-center justify-content-center">
-        <strong>{{ i === 0 ? 'Today' : item.day }} <br /> {{ item.date }}</strong>
-      </div>
-
-      <div class="weather-icon col-1 d-flex align-items-center justify-content-center">
-        <i [ngClass]="mapWeatherIcon(item.details.weatherCode)"></i>
-      </div>
-
-      <div class="weather-info col-3 d-flex align-items-center justify-content-center">
-        {{ item.details.minTemperature }}°C
-      </div>
-
-      <div class="weather-info col-3 d-flex align-items-center justify-content-center">
-        {{ item.details.maxTemperature }}°C
-      </div>
-
-      <div class="weather-info col-3 d-flex align-items-center justify-content-center">
-        {{ item.details.generatedEnergy }} kWh
-      </div>
-
+        <tbody *ngFor="let item of formattedDetails; let i = index">
+        <tr>
+          <th scope="row">
+            {{ (i === 0 ? 'today' : item.day) | translate }} <br /> {{ item.date }}
+          </th>
+          <td>
+            <i [ngClass]="mapWeatherIcon(item.details.weatherCode)"></i>
+          </td>
+          <td>{{ item.details.minTemperature }}°C</td>
+          <td>{{ item.details.maxTemperature }}°C</td>
+          <td>{{ item.details.generatedEnergy }} kWh</td>
+        </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
@@ -244,5 +240,8 @@
         {{ weekSummary.isWeekRainy ? ('rainy_week' | translate) : ('not_rainy_week' | translate) }}
       </div>
     </div>
+
   </div>
+
+
 </ng-template>
